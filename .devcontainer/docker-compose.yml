@@ -1,0 +1,9 @@
+version: "3"
+volumes:
+  rust-volume:
+services:
+  app:
+    build: ./docker/rust
+    tty: true
+    volumes:
+      - rust-volume:/app

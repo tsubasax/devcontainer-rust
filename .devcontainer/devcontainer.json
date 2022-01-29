@@ -1,0 +1,27 @@
+{
+  "name": "Rust Template",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/app",
+  "remoteUser": "vscode",
+  "extensions": [
+    "donjayamanne.githistory",
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    "oderwat.indent-rainbow",
+    "rust-lang.rust",
+    "bungcip.better-toml"
+  ],
+  "settings": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.wordWrap": "off",
+    "editor.rulers": [100],
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.scrollBeyondLastLine": false,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true
+  }
+}
