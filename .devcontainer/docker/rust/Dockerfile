@@ -9,14 +9,23 @@ ENV TZ=Asia/Tokyo \
   LANGUAGE=ja_JP:ja \
   LC_ALL=ja_JP.UTF-8 
 
-RUN apk --update --no-cache add \
+RUN addgroup -S -g "${GID}" "${USER_NAME}" \
+  && adduser -u "${UID}" -G "${USER_NAME}" -D "${USER_NAME}" \
+  # Install packages
+  && apk --update --no-cache add \
   git \
   openssh \
   tzdata \
   && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
   && apk del tzdata \
-  && addgroup -S -g "${GID}" "${USER_NAME}" \
-  && adduser -u "${UID}" -G "${USER_NAME}" -D "${USER_NAME}"
+  # Install Rust components
+  && rustup component add \
+  rls \
+  clippy \
+  rustfmt \
+  rust-src \
+  rust-docs \
+  rust-analysis
 
 USER vscode
 

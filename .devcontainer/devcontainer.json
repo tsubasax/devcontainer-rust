@@ -9,7 +9,7 @@
     "mhutchie.git-graph",
     "eamodio.gitlens",
     "oderwat.indent-rainbow",
-    "rust-lang.rust",
+    "matklad.rust-analyzer",
     "bungcip.better-toml"
   ],
   "settings": {
@@ -22,6 +22,7 @@
     "editor.formatOnType": true,
     "editor.scrollBeyondLastLine": false,
     "files.insertFinalNewline": true,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "rust-analyzer.checkOnSave.command": "clippy"
   }
 }
