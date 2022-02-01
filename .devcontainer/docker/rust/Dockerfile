@@ -1,32 +1,42 @@
-FROM rust:1.58.1-alpine
+FROM rust:1.58.1-slim-buster
 
 ARG UID=1000
 ARG GID=1000
 ARG USER_NAME=vscode
 
-ENV TZ=Asia/Tokyo \
-  LANG=ja_JP.UTF-8 \
-  LANGUAGE=ja_JP:ja \
-  LC_ALL=ja_JP.UTF-8 
+# Change timezone
+ENV TZ=Asia/Tokyo
 
-RUN addgroup -S -g "${GID}" "${USER_NAME}" \
-  && adduser -u "${UID}" -G "${USER_NAME}" -D "${USER_NAME}" \
-  # Install packages
-  && apk --update --no-cache add \
+# Install packages
+RUN apt-get update \
+  && apt-get -y install \
   git \
-  openssh \
-  tzdata \
-  && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
-  && apk del tzdata \
-  # Install Rust components
-  && rustup component add \
-  rls \
-  clippy \
-  rustfmt \
-  rust-src \
-  rust-docs \
-  rust-analysis
+  locales \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
+# Change locale
+RUN sed -i -E 's/# (ja_JP.UTF-8)/\1/' /etc/locale.gen \
+  && locale-gen ja_JP.UTF-8
+
+ENV LANG=ja_JP.UTF-8
+ENV LANGUAGE=ja_JP:ja
+ENV LC_ALL=ja_JP.UTF-8
+
+# Switch to non-root user
+RUN groupadd -g "${GID}" "${USER_NAME}" \
+  && useradd -lm -s /bin/bash -u "${UID}" -g "${USER_NAME}" "${USER_NAME}"
 
 USER vscode
 
+# Install Rust components
+RUN rustup component add \
+  clippy \
+  rls \
+  rustfmt \
+  rust-analysis \
+  rust-docs \
+  rust-src
+
+# Create workspace
 WORKDIR /app
