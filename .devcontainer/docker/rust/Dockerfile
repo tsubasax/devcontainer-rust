@@ -27,7 +27,7 @@ ENV LC_ALL=ja_JP.UTF-8
 RUN groupadd -g "${GID}" "${USER_NAME}" \
   && useradd -lm -s /bin/bash -u "${UID}" -g "${USER_NAME}" "${USER_NAME}"
 
-USER vscode
+USER ${USER_NAME}
 
 # Install Rust components
 RUN rustup component add \
