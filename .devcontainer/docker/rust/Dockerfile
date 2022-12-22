@@ -1,4 +1,4 @@
-FROM rust:1.58.1-slim-buster
+FROM rust:1.66.0-slim-buster
 
 ARG UID=1000
 ARG GID=1000
